@@ -21,8 +21,9 @@ class App extends Component {
   };
 
   countPositiveFeedbackPercentage = () => {
-    const { good, neutral, bad } = this.state;
-    const goodPercentage = (good * 100) / (good + neutral + bad);
+    const { good } = this.state;
+    const goodPercentage = (good * 100) / this.countTotalFeedback();
+
     if (isNaN(goodPercentage)) {
       return 'For the moment there is no statistics';
     }
@@ -52,9 +53,7 @@ class App extends Component {
           />
         </Sections>
         <Sections title="Statistics" sectionClassName="statisticsTitle">
-          {this.state.good === 0 &&
-          this.state.neutral === 0 &&
-          this.state.bad === 0 ? (
+          {this.countTotalFeedback() === 0 ? (
             <NoFeedback />
           ) : (
             <Statistics
